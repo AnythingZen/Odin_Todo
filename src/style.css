@@ -1,0 +1,149 @@
+:root {
+    --priority-color-high: #ffcab0;
+    --priority-color-mid: #fdffcd;
+    --priority-color-norma: #e0ffcd;
+
+    --bg-color-all: black;
+    --bg-color-sidebar: #5e63b6;
+    --bg-color-topbar: #a393eb;
+
+    --font-color-title: #27296d;
+    --font-color-general: #f5c7f7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.hero {
+    height: 100vh;
+    background-color: var(--bg-color-all);
+
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.sideBar {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+    height: 100%;
+
+    background-color: var(--bg-color-sidebar);
+
+    padding: 20px;
+    box-shadow: 2px 0px 2px var(--font-color-general);
+}
+
+.sidetextWrapper {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.sideBarAddWork, .sideBarAddProj {
+    display: flex;
+    
+    font-size: 20px;
+    gap: 5px;
+    color: var(--font-color-general);
+}
+
+.sideBarAddWork {
+    margin-top: 20vh;
+}
+
+.sideBarAddWork:hover, .sideBarAddProj:hover {
+    cursor: pointer;
+    color: var(--bg-color-topbar);
+}
+
+.topRow {
+    grid-column: 2 / 4;
+    background-color: var(--bg-color-topbar);
+    
+    border-bottom: 1px solid var(--bg-color-sidebar);
+    box-shadow: 0 2px 2px var(--bg-color-sidebar);
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    height: 25vh;
+
+    margin-bottom: 35px;
+}
+
+.topRowLeft {
+    font-size: 20px;
+    width: 40vw;
+
+    display: flex;
+}
+
+.searchBar {
+    border: 1px solid var(--bg-color-sidebar);
+    border-radius: 12px;
+    width: 100%;
+
+    padding-left: 20px;
+}
+
+.topRowRight > label, .topRowRight > select {
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--font-color-general);
+}
+
+/* class to be created */
+.toDoContainer {
+    height: 75vh;
+    grid-column: 2 / 4;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.toDoCards {
+    position: relative;
+    border: 1px solid var(--bg-color-sidebar);
+    background: linear-gradient(var(--bg-color-sidebar), var(--bg-color-topbar));
+    
+    border-radius: 8px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.toDoCards::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+}
+
+
