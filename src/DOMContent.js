@@ -1,6 +1,19 @@
 import Magnify from './assets/magnify.svg'
 import AddLogo from './assets/add.svg'
 
+// Helper function for svgs
+const createSideDiv = (logosrc, text, width) => {
+    const div = document.createElement('div')
+    const logo = new Image()
+
+    logo.src = logosrc
+    logo.style.width = width
+    div.innerHTML = text
+    div.appendChild(logo)
+
+    return div
+}
+
 // Seperate into top bar
 // Features: to sort by date/priority
 export function topBarDOM (parentContainer) {
@@ -8,15 +21,14 @@ export function topBarDOM (parentContainer) {
     const leftSide = document.createElement('div')
     const rightSide = document.createElement('div')
 
-    const searchLogo = new Image()
-    searchLogo.src = Magnify
-    searchLogo.style.width = '25px'
+    const searchLogo = createSideDiv(Magnify, null, '25px')
     const searchBar = document.createElement('input')
     searchBar.placeholder = 'Try searching title of your task!'
 
     rowContainer.className = 'topRow'
     leftSide.className = 'topRowLeft'
     rightSide.className = 'topRowRight'
+    searchLogo.className = 'searchLogo'
     searchBar.className = 'searchBar'
 
     parentContainer.appendChild(rowContainer)
@@ -48,19 +60,8 @@ export function sideBarDOM (parentContainer) {
     todoName.style.fontWeight = 'bold'
     todoName.style.color = 'var(--font-color-title)'
 
-    const addWork = document.createElement('div')
-    const addLogo = new Image()
-    addLogo.src = AddLogo
-    addLogo.style.width = '30px'
-    addWork.innerHTML = `<p>Add Todo</p>`
-    addWork.appendChild(addLogo)
-
-    const addProject = document.createElement('div')
-    addProject.innerHTML = `<p>Create Workspace</p>`
-    const addLogo2 = new Image()
-    addLogo2.src = AddLogo
-    addLogo2.style.width = '30px'
-    addProject.appendChild(addLogo2)
+    const addWork = createSideDiv(AddLogo, '<p>Add ToDo</p>', '30px')
+    const addProject = createSideDiv(AddLogo, '<p>Create Workspace</p>', '30px')
 
     sideBar.className = 'sideBar'
     textWrapper.className = 'sideTextWrapper'
@@ -97,6 +98,71 @@ export function createCardDOM () {
     toDoTexts.appendChild(toDoTitle)
     toDoTexts.appendChild(toDoDesc)
     toDoTexts.appendChild(toDoCountdown)
+}
+
+function getDate () {
+    const currentDate = new Date()
+    const day = currentDate.getDate()
+    const month = currentDate.getMonth() + 1
+    const year = currentDate.getFullYear()
+
+    return `${year}-${month}-${day}`
+}
+
+function createInputBar (className, labelText, inputType, value = null) {
+    const label = document.createElement('label')
+    const labelInputBox = document.createElement('input')
+
+    label.for = className
+    label.innerHTML = labelText
+    label.style.fontSize = '25px'
+    label.style.fontWeight = 'bold'
+
+    if (inputType === 'date') labelInputBox.value = value
+
+    labelInputBox.name = className
+    labelInputBox.type = inputType
+    labelInputBox.className = className
+    labelInputBox.style.fontSize = '25px'
+
+    return label.after(labelInputBox)
+}
+
+// Pop up DOM for making ToDo cards
+// To be appended to .hero
+export function createPopUpTodo (parentContainer) {
+    const popUpTodo = document.createElement('div')
+    const popUpWrapper = document.createElement('div')
+    const popUpSubmit = document.createElement('button')
+    popUpSubmit.type = 'button'
+    popUpSubmit.innerHTML = 'Add To Do!' 
+
+    const popUpTitle = createInputBar('popUpTitle', 'Task', 'text')
+    const popUpDesc = createInputBar('popUpDesc', 'Description', 'text')
+    const popUpCalender = createInputBar('popUpCalender', 'Task Ends', 'date', getDate())
+
+    const popUpPriorityWrapper = createElement('div')
+    const popUpNormal = createInputBar('popUpPriorityNormal', 'Normal', 'radio', 'normal')
+    const popUpMedium = createInputBar('popUpPriorityMedium', 'Medium', 'radio', 'medium')
+    const popUpHigh = createInputBar('popUpPriorityHigh', 'High', 'radio', 'high')
+    
+    popUpTodo.className = 'popUpTodo'
+    popUpWrapper.className = 'popUpWrapper'
+    popUpSubmit.className = 'popUpSubmit'
+    popUpPriorityWrapper.className = 'popUpPriorityWrapper'
+
+    popUpTodo.appendChild(popUpWrapper)
+    popUpWrapper.appendChild(popUpTitle)
+    popUpWrapper.appendChild(popUpDesc)
+    popUpWrapper.appendChild(popUpPriorityWrapper)
+    popUpWrapper.appendChild(popUpSubmit)
+
+    popUpPriorityWrapper.appendChild(popUpNormal)
+    popUpPriorityWrapper.appendChild(popUpMedium)
+    popUpPriorityWrapper.appendChild(popUpHigh)
+    
+
+    popUpTodo.style.display = 'none'
 }
 
 // Subsequent import : import { fn name } from 'file_path'

@@ -1,7 +1,7 @@
 :root {
     --priority-color-high: #ffcab0;
     --priority-color-mid: #fdffcd;
-    --priority-color-norma: #e0ffcd;
+    --priority-color-normal: #e0ffcd;
 
     --bg-color-all: black;
     --bg-color-sidebar: #5e63b6;
@@ -100,6 +100,10 @@ body {
     display: flex;
 }
 
+.searchLogo:hover {
+    cursor: pointer;
+}
+
 .searchBar {
     border: 1px solid var(--bg-color-sidebar);
     border-radius: 12px;
@@ -146,4 +150,58 @@ body {
     border-radius: 8px 0 0 8px;
 }
 
+.popUpTodo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: (-50%, -50%);
 
+    padding: 25px;
+    width: 30vw;
+    height: 30vh;
+
+    border-radius: 8px;
+    background-color: var(--bg-color-sidebar);
+
+}
+
+.popUpWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.popUpTitle, .popUpDesc, .popUpCalender,
+.popUpPriorityWrapper {
+    display: flex;
+    gap: 10px;
+
+    width: 30px;
+}
+
+.popUpPriorityHigh {
+    color: var(--priority-color-high)
+}
+.popUpPriorityMedium {
+    color: var(--priority-color-mid)
+}
+.popUpPriorityNormal {
+    color: var(--priority-color-normal)
+}
+
+.popUpSubmit {
+    font-size: 25px;
+    width: 30px;
+    padding: 10px;
+
+    border-radius: 8px;
+    background-color: var(--bg-color-topbar);
+}
+
+.popUpSubmit:hover {
+    cursor: pointer;
+    background-color: var(--font-color-general);
+}
