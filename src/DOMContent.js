@@ -76,15 +76,18 @@ export function sideBarDOM (parentContainer) {
 }
 // Centre todo lists
 // Features: to make todo lists
-export function createCardDOM () {
+export function createCardDOM (parentContainer) {
     const toDoCards = document.createElement('div')
     const toDoTexts = document.createElement('div')
     const toDoCountdown = document.createElement('p')
     
     const toDoTitle = document.createElement('p')
     const toDoDesc = document.createElement('p')
-
+    
     toDoCards.className = 'toDoCards'
+    toDoTitle.className = 'toDoTitle'
+    toDoDesc.className = 'toDoDesc'
+    toDoCountdown.className = 'toDoCountdown'
 
     toDoTitle.style.fontSize = '26px'
     toDoTitle.style.fontWeight = 'bold'
@@ -93,11 +96,15 @@ export function createCardDOM () {
     toDoDesc.style.fontSize = '18px'
     toDoDesc.style.color = 'var(--font-color-general)'
 
+    parentContainer.appendChild(toDoCards)
     toDoCards.appendChild(toDoTexts)
 
     toDoTexts.appendChild(toDoTitle)
     toDoTexts.appendChild(toDoDesc)
     toDoTexts.appendChild(toDoCountdown)
+
+
+    return toDoCards
 }
 
 function getDate () {
@@ -112,57 +119,73 @@ function getDate () {
 function createInputBar (className, labelText, inputType, value = null) {
     const label = document.createElement('label')
     const labelInputBox = document.createElement('input')
+    const wrapper = document.createElement('div'); 
 
     label.for = className
     label.innerHTML = labelText
     label.style.fontSize = '25px'
     label.style.fontWeight = 'bold'
 
-    if (inputType === 'date') labelInputBox.value = value
+    if (inputType === 'date' || inputType === 'radio') labelInputBox.value = value
 
     labelInputBox.name = className
     labelInputBox.type = inputType
     labelInputBox.className = className
     labelInputBox.style.fontSize = '25px'
 
-    return label.after(labelInputBox)
+    wrapper.appendChild(label)
+    wrapper.appendChild(labelInputBox)
+
+    return wrapper
 }
 
 // Pop up DOM for making ToDo cards
 // To be appended to .hero
-export function createPopUpTodo (parentContainer) {
-    const popUpTodo = document.createElement('div')
+export function createPopUpTodo (parentContainer, callback) {
+    const popUpTodo = document.createElement('form')
     const popUpWrapper = document.createElement('div')
     const popUpSubmit = document.createElement('button')
-    popUpSubmit.type = 'button'
+    popUpSubmit.type = 'submit'
     popUpSubmit.innerHTML = 'Add To Do!' 
 
     const popUpTitle = createInputBar('popUpTitle', 'Task', 'text')
     const popUpDesc = createInputBar('popUpDesc', 'Description', 'text')
     const popUpCalender = createInputBar('popUpCalender', 'Task Ends', 'date', getDate())
 
-    const popUpPriorityWrapper = createElement('div')
-    const popUpNormal = createInputBar('popUpPriorityNormal', 'Normal', 'radio', 'normal')
-    const popUpMedium = createInputBar('popUpPriorityMedium', 'Medium', 'radio', 'medium')
-    const popUpHigh = createInputBar('popUpPriorityHigh', 'High', 'radio', 'high')
+    const popUpPriorityWrapper = document.createElement('div')
+    const popUpNormal = createInputBar('popUpPriority', 'Normal', 'radio', 'normal')
+    const popUpMedium = createInputBar('popUpPriority', 'Medium', 'radio', 'medium')
+    const popUpHigh = createInputBar('popUpPriority', 'High', 'radio', 'high')
     
     popUpTodo.className = 'popUpTodo'
     popUpWrapper.className = 'popUpWrapper'
     popUpSubmit.className = 'popUpSubmit'
     popUpPriorityWrapper.className = 'popUpPriorityWrapper'
 
+    parentContainer.appendChild(popUpTodo)
     popUpTodo.appendChild(popUpWrapper)
     popUpWrapper.appendChild(popUpTitle)
     popUpWrapper.appendChild(popUpDesc)
+    popUpWrapper.appendChild(popUpCalender)
     popUpWrapper.appendChild(popUpPriorityWrapper)
     popUpWrapper.appendChild(popUpSubmit)
 
     popUpPriorityWrapper.appendChild(popUpNormal)
     popUpPriorityWrapper.appendChild(popUpMedium)
     popUpPriorityWrapper.appendChild(popUpHigh)
-    
 
-    popUpTodo.style.display = 'none'
+
+    popUpTodo.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const form = e.target
+        const formData = new FormData(form)
+        const formProps = Object.fromEntries(formData)
+
+        callback(formProps)
+        popUpTodo.style.display = 'none'
+
+    })
+
 }
 
 // Subsequent import : import { fn name } from 'file_path'
