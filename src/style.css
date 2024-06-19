@@ -1,7 +1,7 @@
 :root {
-    --priority-color-high: #ffcab0;
-    --priority-color-mid: #fdffcd;
-    --priority-color-normal: #e0ffcd;
+    --priority-color-high: #f5986a;
+    --priority-color-mid: #eff371;
+    --priority-color-normal: #90f551;
 
     --bg-color-all: black;
     --bg-color-sidebar: #5e63b6;
@@ -9,6 +9,8 @@
 
     --font-color-title: #27296d;
     --font-color-general: #f5c7f7;
+
+    --color: #000;
 }
 
 * {
@@ -132,7 +134,8 @@ body {
     position: relative;
     border: 1px solid var(--bg-color-sidebar);
     background: linear-gradient(var(--bg-color-sidebar), var(--bg-color-topbar));
-    
+    max-height: 300px;
+
     border-radius: 8px;
     padding: 20px;
 
@@ -148,6 +151,7 @@ body {
     width: 20px;
     height: 100%;
     border-radius: 8px 0 0 8px;
+    background-color: var(--color);
 }
 
 .popUpTodo {
@@ -182,7 +186,7 @@ body {
     width: 30px;
 }
 
-.popUpPriorityHigh {
+/* .popUpPriorityHigh {
     color: var(--priority-color-high)
 }
 .popUpPriorityMedium {
@@ -190,7 +194,7 @@ body {
 }
 .popUpPriorityNormal {
     color: var(--priority-color-normal)
-}
+} */
 
 .popUpSubmit {
     font-size: 25px;
