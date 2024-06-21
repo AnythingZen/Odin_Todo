@@ -52,14 +52,18 @@ addTodo.addEventListener('click', () => {
 })
 // retrieving cards when workspace is pressed
 workspaceWrapper.addEventListener('click', (event) => {
-    clearToDoContainer()
     const workID = event.target.dataset.id
+    const temp = selectedWorkspace
     selectedWorkspace = Manager.getWorkspaceById(workID)
     
     // displaying cards in that workspace
     if (selectedWorkspace) {
+        clearToDoContainer()
         selectedWorkspace.cardsStorage.forEach(card => {
             toDoContainer.appendChild(card)
         })
+    }
+    else {
+        selectedWorkspace = temp
     }
 })

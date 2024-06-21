@@ -230,7 +230,6 @@ body {
 
 .workspaceWrapper {
     margin-top: 50px;
-    padding: 10px;
     border-top: 2px dotted var(--bg-color-topbar);
 }
 
@@ -238,6 +237,7 @@ body {
     color : var(--font-color-general);
     width: 100%;
     text-align: center;
+    padding-top: 10px;
 }
 
 .workspace:hover {
