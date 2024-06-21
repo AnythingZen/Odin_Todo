@@ -1,15 +1,10 @@
-// workspace stores project, project stores todo
-// workspace to make : toDoContainer.className = 'toDoContainer'
-// class storage, (workspace)
-// class manager (all the todo cards)
-
 import { createCardDOM } from "./DOMContent.js";
 
 export class Todo {
   constructor(formProps) {
     this.title = formProps.popUpTitle;
     this.description = formProps.popUpDesc;
-    this.date = formProps.popUpCalender || "No date specified"; // Optional date
+    this.date = formProps.popUpCalender || '0'; // Optional date
     this.priority = formProps.popUpPriority || 'normal'; // Default priority
   }
 
@@ -23,7 +18,8 @@ export class Todo {
   populateCard(cardElement) {
     cardElement.querySelector('.toDoTitle').innerText = this.title;
     cardElement.querySelector('.toDoDesc').innerText = this.description;
-    cardElement.querySelector('.toDoCountdown').innerText = this.date;
+    cardElement.querySelector('.toDoCountdown').innerText = `
+        You have *${this.date.split('-').pop() - this.todayDate()}* days left!`;
     this.setPriorityColor(cardElement);
   }
 
@@ -42,5 +38,37 @@ export class Todo {
                 break
         }
   }
+
+  todayDate () {
+    const currentDate = new Date()
+    return currentDate.getDate()
+  }
 }
 
+// handles all todo cards
+export class Workspace {
+  constructor(name) {
+    this.name = name
+    this.id = Math.random().toString(36).substring(2, 15); // Generate unique ID
+    this.cardsStorage = []
+  }
+
+  appendToWorkspace (todo) {
+    this.cardsStorage.push(todo)
+  }
+
+  // function to handle sorting by dates/priority
+}
+
+// handles all projects
+export class Manager {
+  static storage = []
+
+  static appendToStorage (workspace) {
+    Manager.storage.push(workspace)
+  }
+
+  static getWorkspaceById(workspaceId) {
+    return Manager.storage.find(ws => ws.id === workspaceId);
+  }
+}

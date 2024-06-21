@@ -32,21 +32,20 @@ picture {
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .hero {
-    height: 100vh;
     background-color: var(--bg-color-all);
-
     display: grid;
     grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr auto;
+
 }
 
 .sideBar {
     grid-column: 1 / 2;
     grid-row: 1 / -1;
-    height: 100%;
 
     background-color: var(--bg-color-sidebar);
 
@@ -80,7 +79,8 @@ body {
 }
 
 .topRow {
-    grid-column: 2 / 4;
+    grid-row: 1 / 2;
+    grid-column: 2 / -1;
     background-color: var(--bg-color-topbar);
     
     border-bottom: 1px solid var(--bg-color-sidebar);
@@ -117,16 +117,19 @@ body {
 .topRowRight > label, .topRowRight > select {
     font-weight: bold;
     font-size: 20px;
-    color: var(--font-color-general);
+    color: var(--font-color-title);
 }
 
 /* class to be created */
 .toDoContainer {
-    height: 75vh;
-    grid-column: 2 / 4;
+    min-height: 75vh;
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+
+    padding: 0 35px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 20px;
 }
 
@@ -134,8 +137,8 @@ body {
     position: relative;
     border: 1px solid var(--bg-color-sidebar);
     background: linear-gradient(var(--bg-color-sidebar), var(--bg-color-topbar));
-    max-height: 300px;
 
+    max-height: 400px;
     border-radius: 8px;
     padding: 20px;
 
@@ -154,17 +157,32 @@ body {
     background-color: var(--color);
 }
 
+.toDoCards > div {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toDoCards > div > p {
+    margin : 0;
+}
+
 .popUpTodo {
     position: absolute;
+
     top: 50%;
     left: 50%;
-    translate: (-50%, -50%);
+    transform: translate(-50%, -50%);
 
     padding: 25px;
-    width: 30vw;
-    height: 30vh;
+    width: 50vw;
 
     border-radius: 8px;
+    border: 5px solid var(--font-color-general);
     background-color: var(--bg-color-sidebar);
 
 }
@@ -176,6 +194,16 @@ body {
     align-items: center;
 
     gap: 10px;
+
+}
+
+.popUpDesc {
+    height: 20vh;
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* in case older browser */
+    white-space: pre-wrap;
+    resize: vertical;
+
 }
 
 .popUpTitle, .popUpDesc, .popUpCalender,
@@ -183,22 +211,12 @@ body {
     display: flex;
     gap: 10px;
 
-    width: 30px;
+    border-radius: 8px;
+    padding-top: 10px;
 }
-
-/* .popUpPriorityHigh {
-    color: var(--priority-color-high)
-}
-.popUpPriorityMedium {
-    color: var(--priority-color-mid)
-}
-.popUpPriorityNormal {
-    color: var(--priority-color-normal)
-} */
 
 .popUpSubmit {
     font-size: 25px;
-    width: 30px;
     padding: 10px;
 
     border-radius: 8px;
@@ -208,4 +226,21 @@ body {
 .popUpSubmit:hover {
     cursor: pointer;
     background-color: var(--font-color-general);
+}
+
+.workspaceWrapper {
+    margin-top: 50px;
+    padding: 10px;
+    border-top: 2px dotted var(--bg-color-topbar);
+}
+
+.workspace {
+    color : var(--font-color-general);
+    width: 100%;
+    text-align: center;
+}
+
+.workspace:hover {
+    cursor: pointer;
+    color: var(--bg-color-topbar);
 }

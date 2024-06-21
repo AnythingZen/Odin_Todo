@@ -93,8 +93,13 @@ export function createCardDOM (parentContainer) {
     toDoTitle.style.fontWeight = 'bold'
     toDoTitle.style.color = 'var(--font-color-title)'
 
-    toDoDesc.style.fontSize = '18px'
+    toDoDesc.style.fontSize = '20px'
+    toDoDesc.style.fontWeight = 'bold'
     toDoDesc.style.color = 'var(--font-color-general)'
+
+    toDoCountdown.style.fontSize = '20px'
+    toDoCountdown.style.fontWeight = 'bold'
+    toDoCountdown.style.color = 'var(--font-color-general)'
 
     parentContainer.appendChild(toDoCards)
     toDoCards.appendChild(toDoTexts)
@@ -118,7 +123,7 @@ function getDate () {
 
 function createInputBar (className, labelText, inputType, value = null) {
     const label = document.createElement('label')
-    const labelInputBox = document.createElement('input')
+    const labelInputBox = className == 'popUpDesc' ? document.createElement('textarea') : document.createElement('input')
     const wrapper = document.createElement('div'); 
 
     label.for = className
@@ -129,7 +134,7 @@ function createInputBar (className, labelText, inputType, value = null) {
     if (inputType === 'date' || inputType === 'radio') labelInputBox.value = value
 
     labelInputBox.name = className
-    labelInputBox.type = inputType
+    if (labelInputBox.nodeName === 'INPUT') labelInputBox.type = inputType
     labelInputBox.className = className
     labelInputBox.style.fontSize = '25px'
 
@@ -182,10 +187,19 @@ export function createPopUpTodo (parentContainer, callback) {
         const formProps = Object.fromEntries(formData)
 
         callback(formProps)
-        popUpTodo.style.display = 'none'
+        popUpTodo.remove()
 
     })
-
 }
 
-// Subsequent import : import { fn name } from 'file_path'
+export function createWorkspaceDOM (workspaceName, workspaceWrapper) {
+    const newWorkspace = document.createElement('div')
+    newWorkspace.innerHTML = workspaceName
+    newWorkspace.className = 'workspace'
+
+    newWorkspace.style.fontSize = '25px'
+    newWorkspace.style.fontWeight = 'bold'
+
+    workspaceWrapper.appendChild(newWorkspace)
+    return newWorkspace
+}
